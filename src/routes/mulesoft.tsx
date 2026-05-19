@@ -70,10 +70,34 @@ const modules = [
 ];
 
 const steps = [
-  { n: "01", t: "Onboarding & Assessment", d: "Review of your current architecture, integrations, and support needs to define tailored SLAs." },
-  { n: "02", t: "24/7 Monitoring", d: "Real-time tools detect anomalies, latency, and errors — ensuring system stability." },
-  { n: "03", t: "Resolution & RCA", d: "Swiftly resolve incidents, then conduct root cause analysis to prevent recurrence." },
-  { n: "04", t: "Optimization & Reporting", d: "Regular health reports, performance insights, and recommendations to keep you agile." },
+  {
+    n: "01",
+    t: "Environment Audit & Onboarding",
+    d: "Review of your current architecture, integrations, and support needs. We map every endpoint, dependency, and risk to define tailored SLAs.",
+    icon: Radar,
+    metric: "Topology mapped",
+  },
+  {
+    n: "02",
+    t: "24/7 Monitoring & Performance",
+    d: "Real-time observability detects anomalies, latency spikes, and errors before they touch the business. Flowing data diagnostics, always on.",
+    icon: Activity,
+    metric: "Live diagnostics",
+  },
+  {
+    n: "03",
+    t: "Issue Resolution & RCA",
+    d: "Swift incident response with intelligent rerouting, then deep root-cause analysis to make sure the same incident never returns.",
+    icon: Wrench,
+    metric: "Self-healing routes",
+  },
+  {
+    n: "04",
+    t: "Optimization & Reporting",
+    d: "Continuous tuning, executive-ready health reports, and infrastructure recommendations that compound performance over time.",
+    icon: LineChart,
+    metric: "Compounding gains",
+  },
 ];
 
 function MuleSoftPage() {
