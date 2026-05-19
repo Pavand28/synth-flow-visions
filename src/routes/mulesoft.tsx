@@ -174,7 +174,7 @@ function MuleSoftPage() {
       <section className="relative px-6 py-24">
         <div className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden glass-strong p-12 md:p-16 text-center">
           <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
-          <h2 className="font-display text-4xl md:text-5xl text-gradient">Ready to orchestrate?</h2>
+          <h2 className="font-display font-semibold text-4xl md:text-5xl tracking-[-0.025em] text-foreground">Ready to orchestrate?</h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Let's design an integration architecture worthy of your ambition.</p>
           <div className="mt-8 flex justify-center"><MagneticButton to="/contact">Get Started <ArrowRight size={16} /></MagneticButton></div>
         </div>
