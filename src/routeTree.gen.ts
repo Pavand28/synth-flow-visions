@@ -9,8 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SalesforceRouteImport } from './routes/salesforce'
+import { Route as MulesoftRouteImport } from './routes/mulesoft'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CompanyRouteImport } from './routes/company'
+import { Route as CareersRouteImport } from './routes/careers'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SalesforceRoute = SalesforceRouteImport.update({
+  id: '/salesforce',
+  path: '/salesforce',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MulesoftRoute = MulesoftRouteImport.update({
+  id: '/mulesoft',
+  path: '/mulesoft',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompanyRoute = CompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +49,96 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/company': typeof CompanyRoute
+  '/contact': typeof ContactRoute
+  '/mulesoft': typeof MulesoftRoute
+  '/salesforce': typeof SalesforceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/company': typeof CompanyRoute
+  '/contact': typeof ContactRoute
+  '/mulesoft': typeof MulesoftRoute
+  '/salesforce': typeof SalesforceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/careers': typeof CareersRoute
+  '/company': typeof CompanyRoute
+  '/contact': typeof ContactRoute
+  '/mulesoft': typeof MulesoftRoute
+  '/salesforce': typeof SalesforceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/careers'
+    | '/company'
+    | '/contact'
+    | '/mulesoft'
+    | '/salesforce'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/careers' | '/company' | '/contact' | '/mulesoft' | '/salesforce'
+  id:
+    | '__root__'
+    | '/'
+    | '/careers'
+    | '/company'
+    | '/contact'
+    | '/mulesoft'
+    | '/salesforce'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CareersRoute: typeof CareersRoute
+  CompanyRoute: typeof CompanyRoute
+  ContactRoute: typeof ContactRoute
+  MulesoftRoute: typeof MulesoftRoute
+  SalesforceRoute: typeof SalesforceRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/salesforce': {
+      id: '/salesforce'
+      path: '/salesforce'
+      fullPath: '/salesforce'
+      preLoaderRoute: typeof SalesforceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mulesoft': {
+      id: '/mulesoft'
+      path: '/mulesoft'
+      fullPath: '/mulesoft'
+      preLoaderRoute: typeof MulesoftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/company': {
+      id: '/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof CompanyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +151,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CareersRoute: CareersRoute,
+  CompanyRoute: CompanyRoute,
+  ContactRoute: ContactRoute,
+  MulesoftRoute: MulesoftRoute,
+  SalesforceRoute: SalesforceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
