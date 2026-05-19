@@ -259,3 +259,199 @@ function BlueprintTopology() {
     </div>
   );
 }
+
+/* ---------------------------------------------------------------------------
+   Premium sticky module navigator — numbered, glowing, expanding active state.
+   --------------------------------------------------------------------------- */
+function ModuleNav({
+  modules,
+  active,
+  onSelect,
+}: {
+  modules: { id: string; title: string; short: string; icon: typeof Layers3 }[];
+  active: string;
+  onSelect: (id: string) => void;
+}) {
+  const activeIndex = Math.max(0, modules.findIndex((m) => m.id === active));
+  const progress = ((activeIndex + 1) / modules.length) * 100;
+
+  return (
+    <div className="mt-8 relative">
+      {/* Architectural rail */}
+      <div className="absolute left-[14px] top-2 bottom-2 w-px bg-white/[0.06]" aria-hidden />
+      <motion.div
+        className="absolute left-[14px] top-2 w-px bg-gradient-to-b from-primary via-primary/60 to-transparent"
+        initial={false}
+        animate={{ height: `calc(${progress}% - 4px)` }}
+        transition={{ type: "spring", stiffness: 90, damping: 20 }}
+        aria-hidden
+      />
+
+      <ol className="space-y-1.5">
+        {modules.map((m, i) => {
+          const isActive = active === m.id;
+          return (
+            <li key={m.id}>
+              <button
+                onClick={() => onSelect(m.id)}
+                aria-current={isActive ? "true" : undefined}
+                className={`group relative w-full pl-10 pr-3 py-3 rounded-xl text-left transition-all duration-300 ${
+                  isActive
+                    ? "bg-primary/[0.06] border border-primary/30 shadow-[0_0_24px_-12px_rgba(0,255,148,0.4)]"
+                    : "border border-transparent hover:bg-white/[0.025] hover:border-white/[0.06]"
+                }`}
+              >
+                {/* Node marker on rail */}
+                <span
+                  className={`absolute left-2 top-1/2 -translate-y-1/2 grid place-items-center h-6 w-6 rounded-full border transition-all duration-300 ${
+                    isActive
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_16px_rgba(0,255,148,0.6)]"
+                      : "bg-background border-white/15 text-muted-foreground group-hover:border-primary/40 group-hover:text-foreground"
+                  }`}
+                >
+                  <span className="font-mono text-[9px] font-semibold">{String(i + 1).padStart(2, "0")}</span>
+                </span>
+
+                <div className="flex items-center gap-3">
+                  <m.icon size={15} className={isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"} />
+                  <span className={`flex-1 text-sm font-medium tracking-tight ${isActive ? "text-foreground" : "text-foreground/70 group-hover:text-foreground"}`}>
+                    {m.title}
+                  </span>
+                </div>
+
+                {/* Expanding subtitle on active */}
+                <motion.div
+                  initial={false}
+                  animate={{ height: isActive ? "auto" : 0, opacity: isActive ? 1 : 0 }}
+                  transition={{ duration: 0.35, ease: [0.2, 0.9, 0.3, 1] }}
+                  className="overflow-hidden"
+                >
+                  <p className="mt-2 ml-7 text-[12px] text-muted-foreground leading-relaxed pr-2">{m.short}</p>
+                </motion.div>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className="mt-6 ml-10 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
+        <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse-glow" />
+        Module {String(activeIndex + 1).padStart(2, "0")} of {String(modules.length).padStart(2, "0")}
+      </div>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Orchestration Journey — animated 4-stage horizontal pipeline with traveling
+   data pulse, connected stage cards, and scroll-triggered activation.
+   --------------------------------------------------------------------------- */
+function OrchestrationJourney({
+  steps,
+}: {
+  steps: { n: string; t: string; d: string; icon: typeof Layers3; metric: string }[];
+}) {
+  const [activeStage, setActiveStage] = useState(0);
+
+  // Cycle the "live pulse" across stages
+  useEffect(() => {
+    const id = setInterval(() => setActiveStage((s) => (s + 1) % steps.length), 2800);
+    return () => clearInterval(id);
+  }, [steps.length]);
+
+  return (
+    <div className="mt-16 relative">
+      {/* Pipeline rail */}
+      <div className="hidden md:block absolute left-0 right-0 top-[68px] h-[2px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      {/* Live energy traveling across the rail */}
+      <div className="hidden md:block absolute left-0 right-0 top-[68px] h-[2px] overflow-hidden">
+        <motion.div
+          className="absolute top-0 h-[2px] w-32 bg-gradient-to-r from-transparent via-primary to-transparent"
+          animate={{ left: ["-10%", "110%"] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
+      <div className="grid md:grid-cols-4 gap-5 md:gap-4 relative">
+        {steps.map((s, i) => {
+          const isLive = activeStage === i;
+          const Icon = s.icon;
+          return (
+            <motion.div
+              key={s.n}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.2, 0.9, 0.3, 1] }}
+              className="relative group"
+            >
+              {/* Connector arrow between stages */}
+              {i < steps.length - 1 && (
+                <div className="hidden md:flex absolute right-[-12px] top-[60px] z-10 items-center justify-center">
+                  <span className={`h-2 w-2 rotate-45 border-t border-r ${isLive ? "border-primary" : "border-white/20"} transition-colors`} />
+                </div>
+              )}
+
+              {/* Node */}
+              <div className="relative mb-5 h-[36px] flex items-center">
+                <div
+                  className={`relative grid place-items-center h-9 w-9 rounded-full transition-all duration-500 ${
+                    isLive
+                      ? "bg-primary text-primary-foreground shadow-[0_0_28px_rgba(0,255,148,0.6)]"
+                      : "bg-background border border-white/15 text-muted-foreground"
+                  }`}
+                >
+                  <Icon size={15} />
+                  {isLive && (
+                    <motion.span
+                      className="absolute inset-0 rounded-full border border-primary"
+                      animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                      transition={{ duration: 1.6, repeat: Infinity }}
+                    />
+                  )}
+                </div>
+                <div className="ml-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Stage {s.n}
+                </div>
+              </div>
+
+              <div
+                className={`relative glass-strong rounded-2xl p-6 h-full transition-all duration-500 ${
+                  isLive ? "border-primary/30 -translate-y-1" : "hover:-translate-y-1 hover:border-primary/20"
+                }`}
+              >
+                {/* Stage data stream visual */}
+                <div className="flex gap-0.5 h-6 mb-4 items-end">
+                  {Array.from({ length: 14 }).map((_, k) => (
+                    <motion.div
+                      key={k}
+                      className="w-1 rounded-sm bg-primary/30"
+                      animate={
+                        isLive
+                          ? { height: ["20%", `${30 + ((k * 37) % 70)}%`, "20%"] }
+                          : { height: `${15 + ((k * 23) % 30)}%` }
+                      }
+                      transition={
+                        isLive
+                          ? { duration: 1.2, repeat: Infinity, delay: k * 0.06, ease: "easeInOut" }
+                          : { duration: 0 }
+                      }
+                    />
+                  ))}
+                </div>
+
+                <h3 className="font-display font-semibold text-[17px] text-foreground tracking-tight leading-snug">{s.t}</h3>
+                <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">{s.d}</p>
+
+                <div className="mt-5 pt-4 border-t border-white/[0.05] flex items-center gap-2">
+                  <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-primary animate-pulse-glow" : "bg-white/20"}`} />
+                  <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">{s.metric}</span>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
