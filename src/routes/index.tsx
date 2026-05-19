@@ -242,7 +242,7 @@ function Home() {
           <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] conic-glow animate-spin-slow" />
           <div className="relative">
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-gradient leading-tight">
+            <h2 className="font-display font-semibold text-4xl md:text-5xl lg:text-6xl tracking-[-0.025em] text-foreground leading-[1.05] text-balance">
               Build smarter. <span className="text-gradient-accent">Ship faster.</span>
             </h2>
             <p className="mt-5 text-muted-foreground max-w-xl mx-auto">
