@@ -200,7 +200,7 @@ function Home() {
                     <Network size={20} className="text-primary" />
                     <span className="font-mono text-xs uppercase tracking-widest text-primary">MuleSoft</span>
                   </div>
-                  <h3 className="font-display text-3xl md:text-4xl text-gradient mb-4">Deliver more, faster.</h3>
+                  <h3 className="font-display font-semibold text-3xl md:text-4xl tracking-tight text-foreground mb-4">Deliver more, faster.</h3>
                   <p className="text-muted-foreground leading-relaxed max-w-md">
                     API-led architectures that unlock data, orchestrate systems, and scale digital initiatives — on-prem, cloud, or hybrid.
                   </p>
