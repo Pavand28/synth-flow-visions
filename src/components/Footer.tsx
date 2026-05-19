@@ -51,9 +51,9 @@ export function Footer() {
           <div className="lg:col-span-4">
             <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Contact</p>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-3 text-foreground/80"><MapPin size={16} className="mt-0.5 text-primary" /> 131 Continental Drive, Suite 301, Newark, DE 19713</li>
-              <li className="flex items-center gap-3 text-foreground/80"><Phone size={16} className="text-primary" /> +1 (872) 217-0356</li>
-              <li className="flex items-center gap-3 text-foreground/80"><Mail size={16} className="text-primary" /> info@nuvarez.com</li>
+              <li className="flex items-start gap-3 text-foreground/80"><MapPin size={16} className="mt-0.5 text-primary" /><span>131 Continental Drive, Suite 301, Newark, DE 19713</span></li>
+              <li className="flex items-center gap-3 text-foreground/80"><Phone size={16} className="text-primary" /><span>+1 (872) 217-0356</span></li>
+              <li className="flex items-center gap-3 text-foreground/80"><Mail size={16} className="text-primary" /><span>info@nuvarez.com</span></li>
             </ul>
           </div>
         </div>

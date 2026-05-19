@@ -16,13 +16,13 @@ export function SectionHeader({ eyebrow, title, lead, align = "left" }: {
       className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : ""}`}
     >
       {eyebrow && (
-        <div className={`inline-flex items-center gap-2 rounded-full glass px-3 py-1 mb-5 ${align === "center" ? "" : ""}`}>
+        <div className={`inline-flex items-center gap-2 rounded-full glass px-3 py-1 mb-5`}>
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse-glow" />
-          <span className="text-[11px] font-mono uppercase tracking-widest text-foreground/80">{eyebrow}</span>
+          <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-foreground/80">{eyebrow}</span>
         </div>
       )}
-      <h2 className="font-display text-4xl md:text-5xl lg:text-6xl tracking-tight text-gradient leading-[1.05]">{title}</h2>
-      {lead && <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">{lead}</p>}
+      <h2 className="font-display font-semibold text-4xl md:text-5xl lg:text-[56px] tracking-[-0.025em] text-foreground leading-[1.05] text-balance">{title}</h2>
+      {lead && <p className="mt-5 text-[17px] text-muted-foreground leading-relaxed max-w-2xl text-pretty">{lead}</p>}
     </motion.div>
   );
 }

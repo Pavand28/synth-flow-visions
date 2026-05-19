@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { ArrowRight, Plus, Minus, Workflow, Code2, GitBranch, Database, LifeBuoy, Layers3, Activity } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Plus, Minus, Workflow, Code2, GitBranch, Database, LifeBuoy, Layers3, Radar, Activity, Wrench, LineChart } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { SectionHeader, Reveal } from "@/components/Section";
 import { AmbientBg } from "@/components/AmbientBg";
@@ -70,10 +70,34 @@ const modules = [
 ];
 
 const steps = [
-  { n: "01", t: "Onboarding & Assessment", d: "Review of your current architecture, integrations, and support needs to define tailored SLAs." },
-  { n: "02", t: "24/7 Monitoring", d: "Real-time tools detect anomalies, latency, and errors — ensuring system stability." },
-  { n: "03", t: "Resolution & RCA", d: "Swiftly resolve incidents, then conduct root cause analysis to prevent recurrence." },
-  { n: "04", t: "Optimization & Reporting", d: "Regular health reports, performance insights, and recommendations to keep you agile." },
+  {
+    n: "01",
+    t: "Environment Audit & Onboarding",
+    d: "Review of your current architecture, integrations, and support needs. We map every endpoint, dependency, and risk to define tailored SLAs.",
+    icon: Radar,
+    metric: "Topology mapped",
+  },
+  {
+    n: "02",
+    t: "24/7 Monitoring & Performance",
+    d: "Real-time observability detects anomalies, latency spikes, and errors before they touch the business. Flowing data diagnostics, always on.",
+    icon: Activity,
+    metric: "Live diagnostics",
+  },
+  {
+    n: "03",
+    t: "Issue Resolution & RCA",
+    d: "Swift incident response with intelligent rerouting, then deep root-cause analysis to make sure the same incident never returns.",
+    icon: Wrench,
+    metric: "Self-healing routes",
+  },
+  {
+    n: "04",
+    t: "Optimization & Reporting",
+    d: "Continuous tuning, executive-ready health reports, and infrastructure recommendations that compound performance over time.",
+    icon: LineChart,
+    metric: "Compounding gains",
+  },
 ];
 
 function MuleSoftPage() {
@@ -112,22 +136,14 @@ function MuleSoftPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10">
           <aside className="lg:col-span-4 lg:sticky lg:top-32 self-start">
             <SectionHeader eyebrow="End-to-end services" title="The full integration lifecycle." />
-            <ul className="mt-8 space-y-1">
-              {modules.map((m) => (
-                <li key={m.id}>
-                  <button
-                    onClick={() => { setActive(m.id); document.getElementById(`mod-${m.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm transition ${
-                      active === m.id ? "glass border-primary/30 text-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <m.icon size={16} className={active === m.id ? "text-primary" : ""} />
-                    <span className="flex-1">{m.title}</span>
-                    <span className={`h-1 w-6 rounded-full ${active === m.id ? "bg-primary" : "bg-white/10"} transition`} />
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <ModuleNav
+              modules={modules}
+              active={active}
+              onSelect={(id) => {
+                setActive(id);
+                document.getElementById(`mod-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+              }}
+            />
           </aside>
 
           <div className="lg:col-span-8 space-y-4">
@@ -138,27 +154,19 @@ function MuleSoftPage() {
         </div>
       </section>
 
-      {/* PROCESS Timeline */}
-      <section className="relative px-6 py-24">
+      {/* PROCESS — Orchestration Journey */}
+      <section className="relative px-6 py-28">
+        <div className="absolute inset-0 -z-[1] pointer-events-none">
+          <div className="absolute inset-0 blueprint-bg radial-fade-soft opacity-40" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] rounded-full bg-primary/[0.06] blur-[120px]" />
+        </div>
         <div className="max-w-7xl mx-auto">
-          <SectionHeader eyebrow="Our process" title="A 4-step orchestration loop." lead="Continuous, instrumented, observable — the way enterprise integration should run." />
-          <div className="mt-16 relative">
-            <div className="absolute left-0 right-0 top-12 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent hidden md:block" />
-            <div className="grid md:grid-cols-4 gap-6">
-              {steps.map((s, i) => (
-                <Reveal key={s.n} delay={i * 0.08}>
-                  <div className="relative glass-strong rounded-2xl p-6 hover-lift">
-                    <div className="relative w-10 h-10 rounded-full bg-background border border-primary/30 grid place-items-center mb-5">
-                      <Activity size={14} className="text-primary" />
-                    </div>
-                    <div className="font-mono text-[10px] uppercase tracking-widest text-primary">{s.n}</div>
-                    <h3 className="font-display text-lg mt-1 mb-2">{s.t}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+          <SectionHeader
+            eyebrow="Our process"
+            title="A 4-stage orchestration journey."
+            lead="Continuous, instrumented, observable — every stage feeds the next, compounding intelligence across your integration estate."
+          />
+          <OrchestrationJourney steps={steps} />
         </div>
       </section>
 
@@ -166,7 +174,7 @@ function MuleSoftPage() {
       <section className="relative px-6 py-24">
         <div className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden glass-strong p-12 md:p-16 text-center">
           <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
-          <h2 className="font-display text-4xl md:text-5xl text-gradient">Ready to orchestrate?</h2>
+          <h2 className="font-display font-semibold text-4xl md:text-5xl tracking-[-0.025em] text-foreground">Ready to orchestrate?</h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Let's design an integration architecture worthy of your ambition.</p>
           <div className="mt-8 flex justify-center"><MagneticButton to="/contact">Get Started <ArrowRight size={16} /></MagneticButton></div>
         </div>
@@ -247,6 +255,202 @@ function BlueprintTopology() {
       <div className="mt-6 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
         <span>API-LED CONNECTIVITY</span>
         <span>3,482 TX/S · 99.99% UPTIME</span>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Premium sticky module navigator — numbered, glowing, expanding active state.
+   --------------------------------------------------------------------------- */
+function ModuleNav({
+  modules,
+  active,
+  onSelect,
+}: {
+  modules: { id: string; title: string; short: string; icon: typeof Layers3 }[];
+  active: string;
+  onSelect: (id: string) => void;
+}) {
+  const activeIndex = Math.max(0, modules.findIndex((m) => m.id === active));
+  const progress = ((activeIndex + 1) / modules.length) * 100;
+
+  return (
+    <div className="mt-8 relative">
+      {/* Architectural rail */}
+      <div className="absolute left-[14px] top-2 bottom-2 w-px bg-white/[0.06]" aria-hidden />
+      <motion.div
+        className="absolute left-[14px] top-2 w-px bg-gradient-to-b from-primary via-primary/60 to-transparent"
+        initial={false}
+        animate={{ height: `calc(${progress}% - 4px)` }}
+        transition={{ type: "spring", stiffness: 90, damping: 20 }}
+        aria-hidden
+      />
+
+      <ol className="space-y-1.5">
+        {modules.map((m, i) => {
+          const isActive = active === m.id;
+          return (
+            <li key={m.id}>
+              <button
+                onClick={() => onSelect(m.id)}
+                aria-current={isActive ? "true" : undefined}
+                className={`group relative w-full pl-10 pr-3 py-3 rounded-xl text-left transition-all duration-300 ${
+                  isActive
+                    ? "bg-primary/[0.06] border border-primary/30 shadow-[0_0_24px_-12px_rgba(0,255,148,0.4)]"
+                    : "border border-transparent hover:bg-white/[0.025] hover:border-white/[0.06]"
+                }`}
+              >
+                {/* Node marker on rail */}
+                <span
+                  className={`absolute left-2 top-1/2 -translate-y-1/2 grid place-items-center h-6 w-6 rounded-full border transition-all duration-300 ${
+                    isActive
+                      ? "bg-primary text-primary-foreground border-primary shadow-[0_0_16px_rgba(0,255,148,0.6)]"
+                      : "bg-background border-white/15 text-muted-foreground group-hover:border-primary/40 group-hover:text-foreground"
+                  }`}
+                >
+                  <span className="font-mono text-[9px] font-semibold">{String(i + 1).padStart(2, "0")}</span>
+                </span>
+
+                <div className="flex items-center gap-3">
+                  <m.icon size={15} className={isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground transition-colors"} />
+                  <span className={`flex-1 text-sm font-medium tracking-tight ${isActive ? "text-foreground" : "text-foreground/70 group-hover:text-foreground"}`}>
+                    {m.title}
+                  </span>
+                </div>
+
+                {/* Expanding subtitle on active */}
+                <motion.div
+                  initial={false}
+                  animate={{ height: isActive ? "auto" : 0, opacity: isActive ? 1 : 0 }}
+                  transition={{ duration: 0.35, ease: [0.2, 0.9, 0.3, 1] }}
+                  className="overflow-hidden"
+                >
+                  <p className="mt-2 ml-7 text-[12px] text-muted-foreground leading-relaxed pr-2">{m.short}</p>
+                </motion.div>
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+
+      <div className="mt-6 ml-10 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">
+        <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse-glow" />
+        Module {String(activeIndex + 1).padStart(2, "0")} of {String(modules.length).padStart(2, "0")}
+      </div>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   Orchestration Journey — animated 4-stage horizontal pipeline with traveling
+   data pulse, connected stage cards, and scroll-triggered activation.
+   --------------------------------------------------------------------------- */
+function OrchestrationJourney({
+  steps,
+}: {
+  steps: { n: string; t: string; d: string; icon: typeof Layers3; metric: string }[];
+}) {
+  const [activeStage, setActiveStage] = useState(0);
+
+  // Cycle the "live pulse" across stages
+  useEffect(() => {
+    const id = setInterval(() => setActiveStage((s) => (s + 1) % steps.length), 2800);
+    return () => clearInterval(id);
+  }, [steps.length]);
+
+  return (
+    <div className="mt-16 relative">
+      {/* Pipeline rail */}
+      <div className="hidden md:block absolute left-0 right-0 top-[68px] h-[2px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      {/* Live energy traveling across the rail */}
+      <div className="hidden md:block absolute left-0 right-0 top-[68px] h-[2px] overflow-hidden">
+        <motion.div
+          className="absolute top-0 h-[2px] w-32 bg-gradient-to-r from-transparent via-primary to-transparent"
+          animate={{ left: ["-10%", "110%"] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+
+      <div className="grid md:grid-cols-4 gap-5 md:gap-4 relative">
+        {steps.map((s, i) => {
+          const isLive = activeStage === i;
+          const Icon = s.icon;
+          return (
+            <motion.div
+              key={s.n}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.2, 0.9, 0.3, 1] }}
+              className="relative group"
+            >
+              {/* Connector arrow between stages */}
+              {i < steps.length - 1 && (
+                <div className="hidden md:flex absolute right-[-12px] top-[60px] z-10 items-center justify-center">
+                  <span className={`h-2 w-2 rotate-45 border-t border-r ${isLive ? "border-primary" : "border-white/20"} transition-colors`} />
+                </div>
+              )}
+
+              {/* Node */}
+              <div className="relative mb-5 h-[36px] flex items-center">
+                <div
+                  className={`relative grid place-items-center h-9 w-9 rounded-full transition-all duration-500 ${
+                    isLive
+                      ? "bg-primary text-primary-foreground shadow-[0_0_28px_rgba(0,255,148,0.6)]"
+                      : "bg-background border border-white/15 text-muted-foreground"
+                  }`}
+                >
+                  <Icon size={15} />
+                  {isLive && (
+                    <motion.span
+                      className="absolute inset-0 rounded-full border border-primary"
+                      animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
+                      transition={{ duration: 1.6, repeat: Infinity }}
+                    />
+                  )}
+                </div>
+                <div className="ml-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Stage {s.n}
+                </div>
+              </div>
+
+              <div
+                className={`relative glass-strong rounded-2xl p-6 h-full transition-all duration-500 ${
+                  isLive ? "border-primary/30 -translate-y-1" : "hover:-translate-y-1 hover:border-primary/20"
+                }`}
+              >
+                {/* Stage data stream visual */}
+                <div className="flex gap-0.5 h-6 mb-4 items-end">
+                  {Array.from({ length: 14 }).map((_, k) => (
+                    <motion.div
+                      key={k}
+                      className="w-1 rounded-sm bg-primary/30"
+                      animate={
+                        isLive
+                          ? { height: ["20%", `${30 + ((k * 37) % 70)}%`, "20%"] }
+                          : { height: `${15 + ((k * 23) % 30)}%` }
+                      }
+                      transition={
+                        isLive
+                          ? { duration: 1.2, repeat: Infinity, delay: k * 0.06, ease: "easeInOut" }
+                          : { duration: 0 }
+                      }
+                    />
+                  ))}
+                </div>
+
+                <h3 className="font-display font-semibold text-[17px] text-foreground tracking-tight leading-snug">{s.t}</h3>
+                <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">{s.d}</p>
+
+                <div className="mt-5 pt-4 border-t border-white/[0.05] flex items-center gap-2">
+                  <span className={`h-1.5 w-1.5 rounded-full ${isLive ? "bg-primary animate-pulse-glow" : "bg-white/20"}`} />
+                  <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground">{s.metric}</span>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );

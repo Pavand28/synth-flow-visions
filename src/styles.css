@@ -5,9 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -104,13 +104,17 @@
   }
   h1, h2, h3, h4, h5 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    font-feature-settings: "ss01", "cv11";
   }
 }
 
 @layer utilities {
-  .font-display { font-family: var(--font-display); }
+  .font-display { font-family: var(--font-display); letter-spacing: -0.025em; }
   .font-mono { font-family: var(--font-mono); }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
 
   .glass {
     background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
@@ -125,7 +129,7 @@
     border: 1px solid rgba(255,255,255,0.08);
   }
   .text-gradient {
-    background: linear-gradient(135deg, #F5F7FA 0%, #A1A1AA 100%);
+    background: linear-gradient(180deg, #FAFBFC 0%, #C8CCD4 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -148,9 +152,41 @@
       linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
     background-size: 64px 64px;
   }
+  .grid-bg-fine {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .blueprint-bg {
+    background-image:
+      linear-gradient(rgba(0,255,148,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,194,255,0.04) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 160px 160px, 160px 160px, 32px 32px, 32px 32px;
+  }
+  .mesh-aurora {
+    background:
+      radial-gradient(60% 50% at 15% 20%, rgba(0,255,148,0.18), transparent 60%),
+      radial-gradient(50% 40% at 85% 30%, rgba(0,194,255,0.16), transparent 60%),
+      radial-gradient(70% 55% at 50% 100%, rgba(120,80,255,0.12), transparent 65%),
+      radial-gradient(40% 30% at 80% 90%, rgba(0,255,200,0.10), transparent 65%);
+  }
   .radial-fade {
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+  .radial-fade-soft {
+    mask-image: radial-gradient(ellipse at center, black 10%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 85%);
+  }
+  .spotlight-top {
+    mask-image: linear-gradient(180deg, black 0%, black 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 40%, transparent 100%);
+  }
+  .scanlines {
+    background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 4px);
   }
   .noise {
     position: relative;
