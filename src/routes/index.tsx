@@ -35,27 +35,34 @@ const regions = [
 function Home() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative pt-32 md:pt-40 pb-20 px-6">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-6">
+      {/* HERO — integrated ecosystem environment */}
+      <section className="relative min-h-[100vh] pt-32 md:pt-36 pb-24 px-6 overflow-hidden">
+        {/* Hero-local environmental layers that BLEND into the page bg */}
+        <div className="absolute inset-0 -z-[1] pointer-events-none">
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1200px] h-[800px] rounded-full bg-primary/[0.10] blur-[140px]" />
+          <div className="absolute top-20 right-0 w-[700px] h-[700px] rounded-full bg-accent/[0.08] blur-[120px]" />
+          <div className="absolute inset-0 blueprint-bg opacity-50 spotlight-top" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="lg:col-span-5 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 mb-6"
+              className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 mb-7"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse-glow" />
-              <span className="text-[11px] font-mono uppercase tracking-widest text-foreground/80">Official Salesforce & MuleSoft Partner</span>
+              <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-foreground/80">Official Salesforce &amp; MuleSoft Partner</span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: [0.2, 0.9, 0.3, 1] }}
-              className="font-display text-5xl md:text-6xl lg:text-7xl leading-[1.02] tracking-tight"
+              className="font-display font-semibold text-5xl md:text-6xl lg:text-[68px] leading-[1.02] tracking-[-0.03em] text-foreground text-balance"
             >
-              <span className="text-gradient">Enterprise integration,</span>
+              Enterprise integration,
               <br />
               <span className="text-gradient-accent">architected.</span>
             </motion.h1>
@@ -64,7 +71,7 @@ function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.15 }}
-              className="mt-6 text-lg text-muted-foreground max-w-xl leading-relaxed"
+              className="mt-7 text-[17px] text-muted-foreground max-w-xl leading-relaxed text-pretty"
             >
               We modernize legacy systems, orchestrate APIs, and deliver connected experiences across your enterprise ecosystem — with the precision of a boutique partner.
             </motion.p>
@@ -87,7 +94,7 @@ function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.6 }}
-              className="mt-12 grid grid-cols-3 gap-6 max-w-md"
+              className="mt-14 grid grid-cols-3 gap-6 max-w-md"
             >
               {[
                 { k: "100+", v: "MuleSoft projects" },
@@ -95,14 +102,14 @@ function Home() {
                 { k: "99.99%", v: "SLA uptime" },
               ].map((s) => (
                 <div key={s.v}>
-                  <div className="font-display text-2xl text-gradient-accent">{s.k}</div>
-                  <div className="text-xs text-muted-foreground mt-1">{s.v}</div>
+                  <div className="font-display font-semibold text-2xl text-foreground tracking-tight">{s.k}</div>
+                  <div className="text-xs text-muted-foreground mt-1.5">{s.v}</div>
                 </div>
               ))}
             </motion.div>
           </div>
 
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-7 relative">
             <HeroEcosystem />
           </div>
         </div>
