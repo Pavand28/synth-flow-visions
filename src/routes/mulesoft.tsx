@@ -136,22 +136,14 @@ function MuleSoftPage() {
         <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10">
           <aside className="lg:col-span-4 lg:sticky lg:top-32 self-start">
             <SectionHeader eyebrow="End-to-end services" title="The full integration lifecycle." />
-            <ul className="mt-8 space-y-1">
-              {modules.map((m) => (
-                <li key={m.id}>
-                  <button
-                    onClick={() => { setActive(m.id); document.getElementById(`mod-${m.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" }); }}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-sm transition ${
-                      active === m.id ? "glass border-primary/30 text-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <m.icon size={16} className={active === m.id ? "text-primary" : ""} />
-                    <span className="flex-1">{m.title}</span>
-                    <span className={`h-1 w-6 rounded-full ${active === m.id ? "bg-primary" : "bg-white/10"} transition`} />
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <ModuleNav
+              modules={modules}
+              active={active}
+              onSelect={(id) => {
+                setActive(id);
+                document.getElementById(`mod-${id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+              }}
+            />
           </aside>
 
           <div className="lg:col-span-8 space-y-4">
@@ -162,27 +154,19 @@ function MuleSoftPage() {
         </div>
       </section>
 
-      {/* PROCESS Timeline */}
-      <section className="relative px-6 py-24">
+      {/* PROCESS — Orchestration Journey */}
+      <section className="relative px-6 py-28">
+        <div className="absolute inset-0 -z-[1] pointer-events-none">
+          <div className="absolute inset-0 blueprint-bg radial-fade-soft opacity-40" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] rounded-full bg-primary/[0.06] blur-[120px]" />
+        </div>
         <div className="max-w-7xl mx-auto">
-          <SectionHeader eyebrow="Our process" title="A 4-step orchestration loop." lead="Continuous, instrumented, observable — the way enterprise integration should run." />
-          <div className="mt-16 relative">
-            <div className="absolute left-0 right-0 top-12 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent hidden md:block" />
-            <div className="grid md:grid-cols-4 gap-6">
-              {steps.map((s, i) => (
-                <Reveal key={s.n} delay={i * 0.08}>
-                  <div className="relative glass-strong rounded-2xl p-6 hover-lift">
-                    <div className="relative w-10 h-10 rounded-full bg-background border border-primary/30 grid place-items-center mb-5">
-                      <Activity size={14} className="text-primary" />
-                    </div>
-                    <div className="font-mono text-[10px] uppercase tracking-widest text-primary">{s.n}</div>
-                    <h3 className="font-display text-lg mt-1 mb-2">{s.t}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
+          <SectionHeader
+            eyebrow="Our process"
+            title="A 4-stage orchestration journey."
+            lead="Continuous, instrumented, observable — every stage feeds the next, compounding intelligence across your integration estate."
+          />
+          <OrchestrationJourney steps={steps} />
         </div>
       </section>
 
