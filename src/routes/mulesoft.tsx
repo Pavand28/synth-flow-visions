@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { ArrowRight, Plus, Minus, Workflow, Code2, GitBranch, Database, LifeBuoy, Layers3, Activity } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Plus, Minus, Workflow, Code2, GitBranch, Database, LifeBuoy, Layers3, Radar, Activity, Wrench, LineChart } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { SectionHeader, Reveal } from "@/components/Section";
 import { AmbientBg } from "@/components/AmbientBg";
