@@ -221,7 +221,7 @@ function Home() {
                     <Globe2 size={20} className="text-accent" />
                     <span className="font-mono text-xs uppercase tracking-widest text-accent">Salesforce</span>
                   </div>
-                  <h3 className="font-display text-3xl md:text-4xl text-gradient mb-4">Reimagine customer connections.</h3>
+                  <h3 className="font-display font-semibold text-3xl md:text-4xl tracking-tight text-foreground mb-4">Reimagine customer connections.</h3>
                   <p className="text-muted-foreground leading-relaxed max-w-md">
                     Strategic advisory, tailored implementations, and continuous optimization across sales, service, marketing, and commerce.
                   </p>
