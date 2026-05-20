@@ -91,6 +91,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <Chatbot />
     </QueryClientProvider>
   );
 }
