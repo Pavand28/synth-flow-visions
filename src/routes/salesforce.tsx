@@ -122,17 +122,13 @@ function SalesforcePage() {
       <section className="relative px-6 py-24">
         <div className="max-w-7xl mx-auto">
           <SectionHeader eyebrow="Our 4-step advisory process" title="Disciplined. Iterative. Outcome-led." />
-          <div className="mt-14 grid md:grid-cols-2 gap-4">
+          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
             {process.map((s, i) => (
               <Reveal key={s.n} delay={i * 0.08}>
-                <div className="relative glass-strong rounded-2xl p-7 hover-lift">
-                  <div className="flex items-start gap-5">
-                    <div className="font-display text-5xl text-gradient-accent leading-none">{s.n}</div>
-                    <div>
-                      <h3 className="font-display text-xl mb-2">{s.t}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
-                    </div>
-                  </div>
+                <div className="relative glass-strong rounded-2xl p-7 hover-lift h-full flex flex-col">
+                  <div className="font-display text-5xl text-gradient-accent leading-none mb-4">{s.n}</div>
+                  <h3 className="font-display text-lg mb-2 text-foreground">{s.t}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
                 </div>
               </Reveal>
             ))}
