@@ -4,6 +4,7 @@ import { ArrowRight, Compass, ClipboardCheck, Sparkles, Rocket, Users, BarChart3
 import { MagneticButton } from "@/components/MagneticButton";
 import { SectionHeader, Reveal } from "@/components/Section";
 import { AmbientBg } from "@/components/AmbientBg";
+import salesforceLogo from "@/assets/brand/salesforce.png";
 
 export const Route = createFileRoute("/salesforce")({
   head: () => ({
@@ -46,8 +47,8 @@ function SalesforcePage() {
       <AmbientBg variant="salesforce" />
 
       <section className="relative pt-32 md:pt-40 pb-16 px-6">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="lg:col-span-6">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 rounded-full glass px-3 py-1 mb-6">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse-glow" />
               <span className="text-[11px] font-mono uppercase tracking-widest text-foreground/80">Salesforce Solutions</span>
@@ -63,12 +64,12 @@ function SalesforcePage() {
 
           {/* Journey ribbon visual */}
           <Reveal>
-            <div className="lg:col-span-5">
-              <div className="relative glass-strong rounded-3xl p-6 overflow-hidden">
-                <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
+            <div className="lg:col-span-6 w-full">
+              <div className="relative glass-strong rounded-3xl p-6 md:p-8 overflow-visible w-full">
+                <div className="absolute inset-0 grid-bg radial-fade opacity-40 rounded-3xl pointer-events-none" />
                 <div className="relative">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-4">Customer Journey · Orchestrated</div>
-                  <div className="space-y-2">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-accent mb-5">Customer Journey · Orchestrated</div>
+                  <div className="space-y-2.5">
                     {journey.map((j, i) => (
                       <motion.div
                         key={j.stage}
@@ -78,15 +79,15 @@ function SalesforcePage() {
                         transition={{ delay: i * 0.1 }}
                         className="flex items-center gap-3"
                       >
-                        <div className="w-12 text-[10px] font-mono text-muted-foreground">0{i + 1}</div>
-                        <div className="flex-1 h-9 rounded-lg glass overflow-hidden relative">
+                        <div className="w-10 text-[10px] font-mono text-muted-foreground shrink-0">0{i + 1}</div>
+                        <div className="flex-1 h-10 rounded-lg glass overflow-hidden relative">
                           <div className={`absolute inset-y-0 left-0 bg-gradient-to-r ${j.color}`} style={{ width: `${60 + i * 8}%` }} />
                           <div className="relative h-full flex items-center px-3 text-sm font-medium">{j.stage}</div>
                         </div>
                       </motion.div>
                     ))}
                   </div>
-                  <div className="mt-5 grid grid-cols-3 gap-3 text-center">
+                  <div className="mt-6 grid grid-cols-3 gap-3 text-center">
                     <Metric k="+38%" v="Conversion" />
                     <Metric k="2.4x" v="LTV" />
                     <Metric k="-41%" v="Churn" />
@@ -122,17 +123,13 @@ function SalesforcePage() {
       <section className="relative px-6 py-24">
         <div className="max-w-7xl mx-auto">
           <SectionHeader eyebrow="Our 4-step advisory process" title="Disciplined. Iterative. Outcome-led." />
-          <div className="mt-14 grid md:grid-cols-2 gap-4">
+          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">
             {process.map((s, i) => (
               <Reveal key={s.n} delay={i * 0.08}>
-                <div className="relative glass-strong rounded-2xl p-7 hover-lift">
-                  <div className="flex items-start gap-5">
-                    <div className="font-display text-5xl text-gradient-accent leading-none">{s.n}</div>
-                    <div>
-                      <h3 className="font-display text-xl mb-2">{s.t}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
-                    </div>
-                  </div>
+                <div className="relative glass-strong rounded-2xl p-7 hover-lift h-full flex flex-col">
+                  <div className="font-display text-5xl text-gradient-accent leading-none mb-4">{s.n}</div>
+                  <h3 className="font-display text-lg mb-2 text-foreground">{s.t}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.d}</p>
                 </div>
               </Reveal>
             ))}
@@ -144,7 +141,10 @@ function SalesforcePage() {
       <section className="relative px-6 py-24">
         <div className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden glass-strong p-12 md:p-16 text-center">
           <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
-          <Sparkles size={20} className="text-accent mx-auto mb-4" />
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <img src={salesforceLogo} alt="Salesforce" className="h-10 w-auto object-contain opacity-90" />
+            <Sparkles size={18} className="text-accent" />
+          </div>
           <h2 className="font-display text-4xl md:text-5xl text-gradient">Make every customer moment count.</h2>
           <div className="mt-8 flex justify-center"><MagneticButton to="/contact">Get Started <ArrowRight size={16} /></MagneticButton></div>
         </div>

@@ -1,64 +1,112 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
+import { Linkedin, Facebook, Twitter, Youtube } from "lucide-react";
+import nuvarezLogo from "@/assets/brand/nuvarez.png";
+
+const mulesoftLinks = [
+  "Integration Architecture & Strategy",
+  "Mulesoft Implementation",
+  "API Design & Development",
+  "Mulesoft Migration Services",
+  "Managed Integration Services",
+  "Legacy System Modernization",
+  "Application Support & Maintenance",
+];
+
+const salesforceLinks = [
+  "Salesforce Advisory",
+  "Salesforce Implementation",
+  "System Integration",
+  "Data Migration & Cleanup",
+  "Business Process Automation",
+  "Analytics & Reporting",
+  "Managed Services",
+];
+
+const quickLinks: { label: string; to: string }[] = [
+  { label: "About Nuvarez", to: "/company" },
+  { label: "Our Team", to: "/company" },
+  { label: "Careers", to: "/careers" },
+  { label: "Insights", to: "/insights" },
+];
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-white/5 mt-32 overflow-hidden">
-      <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] conic-glow animate-spin-slow" />
+    <footer className="relative border-t border-white/5 mt-32 overflow-hidden bg-[#04060a]">
+      <div className="absolute inset-0 grid-bg radial-fade opacity-30" />
+      <div className="absolute -top-40 right-0 w-[500px] h-[500px] bg-primary/5 blur-[140px] rounded-full pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-10">
-        <div className="grid lg:grid-cols-12 gap-12 mb-16">
-          <div className="lg:col-span-5">
-            <div className="flex items-center gap-2 mb-5">
-              <div className="relative h-9 w-9">
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary to-accent" />
-                <div className="absolute inset-[2px] rounded-[7px] bg-background grid place-items-center">
-                  <span className="font-display font-bold text-gradient-accent">N</span>
-                </div>
-              </div>
-              <span className="font-display font-semibold text-xl">Nuvarez</span>
-            </div>
-            <h3 className="font-display text-3xl md:text-4xl text-gradient max-w-md leading-tight">
-              Architecting the next generation of enterprise integration.
-            </h3>
-            <Link to="/contact" className="inline-flex items-center gap-2 mt-8 text-primary font-medium group">
-              Start a project
-              <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+      <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-14">
+          {/* Brand column */}
+          <div className="lg:col-span-3">
+            <Link to="/" className="inline-block">
+              <img
+                src={nuvarezLogo}
+                alt="Nuvarez"
+                className="h-9 w-auto object-contain"
+              />
             </Link>
+            <div className="mt-7 space-y-2 text-sm text-foreground/80">
+              <p className="font-medium text-foreground">+1 (945) 350-5561</p>
+              <p>info@nuvarez.com</p>
+            </div>
+            <div className="mt-6 flex items-center gap-2.5">
+              {[
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Facebook, label: "Facebook" },
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Youtube, label: "YouTube" },
+              ].map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="h-9 w-9 grid place-items-center rounded-full bg-primary/10 border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition"
+                >
+                  <Icon size={15} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          <div className="lg:col-span-3 grid grid-cols-2 gap-8">
-            <div>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Platform</p>
-              <ul className="space-y-2.5 text-sm">
-                <li><Link to="/mulesoft" className="text-foreground/80 hover:text-primary transition">MuleSoft</Link></li>
-                <li><Link to="/salesforce" className="text-foreground/80 hover:text-primary transition">Salesforce</Link></li>
-                <li><Link to="/company" className="text-foreground/80 hover:text-primary transition">Company</Link></li>
-                <li><Link to="/careers" className="text-foreground/80 hover:text-primary transition">Careers</Link></li>
-              </ul>
-            </div>
-            <div>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Regions</p>
-              <ul className="space-y-2.5 text-sm text-foreground/80">
-                <li>United States</li>
-                <li>India</li>
-                <li>Mexico</li>
-              </ul>
-            </div>
+          {/* Mulesoft */}
+          <div className="lg:col-span-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground mb-5">MuleSoft Solutions</p>
+            <ul className="space-y-3 text-[13.5px]">
+              {mulesoftLinks.map((l) => (
+                <li key={l}>
+                  <Link to="/mulesoft" className="text-muted-foreground hover:text-primary transition">{l}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="lg:col-span-4">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Contact</p>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-3 text-foreground/80"><MapPin size={16} className="mt-0.5 text-primary" /><span>131 Continental Drive, Suite 301, Newark, DE 19713</span></li>
-              <li className="flex items-center gap-3 text-foreground/80"><Phone size={16} className="text-primary" /><span>+1 (872) 217-0356</span></li>
-              <li className="flex items-center gap-3 text-foreground/80"><Mail size={16} className="text-primary" /><span>info@nuvarez.com</span></li>
+          {/* Salesforce */}
+          <div className="lg:col-span-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground mb-5">Salesforce Solutions</p>
+            <ul className="space-y-3 text-[13.5px]">
+              {salesforceLinks.map((l) => (
+                <li key={l}>
+                  <Link to="/salesforce" className="text-muted-foreground hover:text-primary transition">{l}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Quick links */}
+          <div className="lg:col-span-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-foreground mb-5">Quick Links</p>
+            <ul className="space-y-3 text-[13.5px]">
+              {quickLinks.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-muted-foreground hover:text-primary transition">{l.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pt-8 border-t border-white/5">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 pt-8 border-t border-white/5">
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} Nuvarez. All rights reserved.</p>
           <p className="text-xs text-muted-foreground font-mono">SYSTEM://INTEGRATION.ONLINE</p>
         </div>

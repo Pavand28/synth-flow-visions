@@ -1,10 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { createFileRoute } from "@tanstack/react-router";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ArrowRight, Plus, Minus, Workflow, Code2, GitBranch, Database, LifeBuoy, Layers3, Radar, Activity, Wrench, LineChart } from "lucide-react";
+import { ArrowRight, Plus, Minus, Workflow, Code2, GitBranch, Database, LifeBuoy, Layers3, Radar, Activity, Wrench, LineChart, ChevronDown, Maximize2 } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { SectionHeader, Reveal } from "@/components/Section";
 import { AmbientBg } from "@/components/AmbientBg";
+import mulesoftLogo from "@/assets/brand/mulesoft.png";
 
 export const Route = createFileRoute("/mulesoft")({
   head: () => ({
@@ -166,7 +167,7 @@ function MuleSoftPage() {
             title="A 4-stage orchestration journey."
             lead="Continuous, instrumented, observable — every stage feeds the next, compounding intelligence across your integration estate."
           />
-          <OrchestrationJourney steps={steps} />
+          <ResponsiveLifecycle steps={steps} />
         </div>
       </section>
 
@@ -174,6 +175,7 @@ function MuleSoftPage() {
       <section className="relative px-6 py-24">
         <div className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden glass-strong p-12 md:p-16 text-center">
           <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
+          <img src={mulesoftLogo} alt="MuleSoft from Salesforce" className="relative mx-auto mb-6 h-12 w-auto object-contain rounded-md" />
           <h2 className="font-display font-semibold text-4xl md:text-5xl tracking-[-0.025em] text-foreground">Ready to orchestrate?</h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">Let's design an integration architecture worthy of your ambition.</p>
           <div className="mt-8 flex justify-center"><MagneticButton to="/contact">Get Started <ArrowRight size={16} /></MagneticButton></div>
@@ -453,5 +455,67 @@ function OrchestrationJourney({
         })}
       </div>
     </div>
+  );
+}
+
+/* ---------------------------------------------------------------------------
+   ResponsiveLifecycle — desktop renders the full OrchestrationJourney as-is.
+   On tablet & mobile, the same lifecycle is rendered inside a collapsed
+   container with a tap-to-expand affordance. No data or visuals are changed.
+   --------------------------------------------------------------------------- */
+function ResponsiveLifecycle({ steps }: { steps: { n: string; t: string; d: string; icon: typeof Layers3; metric: string }[] }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <>
+      {/* Desktop — unchanged */}
+      <div className="hidden lg:block">
+        <OrchestrationJourney steps={steps} />
+      </div>
+
+      {/* Tablet & Mobile — collapsible */}
+      <div className="lg:hidden mt-10">
+        <button
+          onClick={() => setExpanded((e) => !e)}
+          className="w-full flex items-center justify-between gap-3 rounded-2xl glass-strong px-5 py-4 text-left transition hover:border-primary/30"
+        >
+          <div className="flex items-center gap-3">
+            <span className="grid place-items-center h-9 w-9 rounded-lg bg-primary/10 border border-primary/30 text-primary">
+              <Maximize2 size={15} />
+            </span>
+            <div>
+              <div className="text-sm font-semibold text-foreground leading-tight">
+                {expanded ? "Hide full integration lifecycle" : "View full integration lifecycle"}
+              </div>
+              <div className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mt-0.5">
+                Tap to {expanded ? "collapse" : "expand"} full integration lifecycle
+              </div>
+            </div>
+          </div>
+          <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }} className="text-primary">
+            <ChevronDown size={20} />
+          </motion.span>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="lifecycle"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.2, 0.9, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="overflow-x-auto pb-2 mt-2">
+                <div className="min-w-[760px]">
+                  <OrchestrationJourney steps={steps} />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 }
