@@ -457,3 +457,65 @@ function OrchestrationJourney({
     </div>
   );
 }
+
+/* ---------------------------------------------------------------------------
+   ResponsiveLifecycle — desktop renders the full OrchestrationJourney as-is.
+   On tablet & mobile, the same lifecycle is rendered inside a collapsed
+   container with a tap-to-expand affordance. No data or visuals are changed.
+   --------------------------------------------------------------------------- */
+function ResponsiveLifecycle({ steps }: { steps: { n: string; t: string; d: string; icon: typeof Layers3; metric: string }[] }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <>
+      {/* Desktop — unchanged */}
+      <div className="hidden lg:block">
+        <OrchestrationJourney steps={steps} />
+      </div>
+
+      {/* Tablet & Mobile — collapsible */}
+      <div className="lg:hidden mt-10">
+        <button
+          onClick={() => setExpanded((e) => !e)}
+          className="w-full flex items-center justify-between gap-3 rounded-2xl glass-strong px-5 py-4 text-left transition hover:border-primary/30"
+        >
+          <div className="flex items-center gap-3">
+            <span className="grid place-items-center h-9 w-9 rounded-lg bg-primary/10 border border-primary/30 text-primary">
+              <Maximize2 size={15} />
+            </span>
+            <div>
+              <div className="text-sm font-semibold text-foreground leading-tight">
+                {expanded ? "Hide full integration lifecycle" : "View full integration lifecycle"}
+              </div>
+              <div className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mt-0.5">
+                Tap to {expanded ? "collapse" : "expand"} full integration lifecycle
+              </div>
+            </div>
+          </div>
+          <motion.span animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }} className="text-primary">
+            <ChevronDown size={20} />
+          </motion.span>
+        </button>
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              key="lifecycle"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.45, ease: [0.2, 0.9, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="overflow-x-auto pb-2 mt-2">
+                <div className="min-w-[760px]">
+                  <OrchestrationJourney steps={steps} />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
+  );
+}
