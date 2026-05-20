@@ -13,6 +13,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { AmbientBg } from "@/components/AmbientBg";
+import { Chatbot } from "@/components/Chatbot";
 
 function NotFoundComponent() {
   return (
