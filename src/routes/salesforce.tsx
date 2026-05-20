@@ -141,7 +141,10 @@ function SalesforcePage() {
       <section className="relative px-6 py-24">
         <div className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden glass-strong p-12 md:p-16 text-center">
           <div className="absolute inset-0 grid-bg radial-fade opacity-40" />
-          <Sparkles size={20} className="text-accent mx-auto mb-4" />
+          <div className="flex items-center justify-center gap-3 mb-5">
+            <img src={salesforceLogo} alt="Salesforce" className="h-10 w-auto object-contain opacity-90" />
+            <Sparkles size={18} className="text-accent" />
+          </div>
           <h2 className="font-display text-4xl md:text-5xl text-gradient">Make every customer moment count.</h2>
           <div className="mt-8 flex justify-center"><MagneticButton to="/contact">Get Started <ArrowRight size={16} /></MagneticButton></div>
         </div>
