@@ -4,6 +4,7 @@ import { ArrowRight, Compass, ClipboardCheck, Sparkles, Rocket, Users, BarChart3
 import { MagneticButton } from "@/components/MagneticButton";
 import { SectionHeader, Reveal } from "@/components/Section";
 import { AmbientBg } from "@/components/AmbientBg";
+import salesforceLogo from "@/assets/brand/salesforce.png";
 
 export const Route = createFileRoute("/salesforce")({
   head: () => ({
