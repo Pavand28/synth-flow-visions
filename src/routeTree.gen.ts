@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SalesforceRouteImport } from './routes/salesforce'
 import { Route as MulesoftRouteImport } from './routes/mulesoft'
+import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CompanyRouteImport } from './routes/company'
 import { Route as CareersRouteImport } from './routes/careers'
@@ -24,6 +25,11 @@ const SalesforceRoute = SalesforceRouteImport.update({
 const MulesoftRoute = MulesoftRouteImport.update({
   id: '/mulesoft',
   path: '/mulesoft',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustriesRoute = IndustriesRouteImport.update({
+  id: '/industries',
+  path: '/industries',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/careers': typeof CareersRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/industries': typeof IndustriesRoute
   '/mulesoft': typeof MulesoftRoute
   '/salesforce': typeof SalesforceRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/careers': typeof CareersRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/industries': typeof IndustriesRoute
   '/mulesoft': typeof MulesoftRoute
   '/salesforce': typeof SalesforceRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/careers': typeof CareersRoute
   '/company': typeof CompanyRoute
   '/contact': typeof ContactRoute
+  '/industries': typeof IndustriesRoute
   '/mulesoft': typeof MulesoftRoute
   '/salesforce': typeof SalesforceRoute
 }
@@ -79,16 +88,25 @@ export interface FileRouteTypes {
     | '/careers'
     | '/company'
     | '/contact'
+    | '/industries'
     | '/mulesoft'
     | '/salesforce'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/careers' | '/company' | '/contact' | '/mulesoft' | '/salesforce'
+  to:
+    | '/'
+    | '/careers'
+    | '/company'
+    | '/contact'
+    | '/industries'
+    | '/mulesoft'
+    | '/salesforce'
   id:
     | '__root__'
     | '/'
     | '/careers'
     | '/company'
     | '/contact'
+    | '/industries'
     | '/mulesoft'
     | '/salesforce'
   fileRoutesById: FileRoutesById
@@ -98,6 +116,7 @@ export interface RootRouteChildren {
   CareersRoute: typeof CareersRoute
   CompanyRoute: typeof CompanyRoute
   ContactRoute: typeof ContactRoute
+  IndustriesRoute: typeof IndustriesRoute
   MulesoftRoute: typeof MulesoftRoute
   SalesforceRoute: typeof SalesforceRoute
 }
@@ -116,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/mulesoft'
       fullPath: '/mulesoft'
       preLoaderRoute: typeof MulesoftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industries': {
+      id: '/industries'
+      path: '/industries'
+      fullPath: '/industries'
+      preLoaderRoute: typeof IndustriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -154,9 +180,20 @@ const rootRouteChildren: RootRouteChildren = {
   CareersRoute: CareersRoute,
   CompanyRoute: CompanyRoute,
   ContactRoute: ContactRoute,
+  IndustriesRoute: IndustriesRoute,
   MulesoftRoute: MulesoftRoute,
   SalesforceRoute: SalesforceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
