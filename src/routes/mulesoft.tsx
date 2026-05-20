@@ -167,7 +167,7 @@ function MuleSoftPage() {
             title="A 4-stage orchestration journey."
             lead="Continuous, instrumented, observable — every stage feeds the next, compounding intelligence across your integration estate."
           />
-          <OrchestrationJourney steps={steps} />
+          <ResponsiveLifecycle steps={steps} />
         </div>
       </section>
 
