@@ -1,1 +1,23 @@
-.
+
+---
+
+### Q2 — LICENSE ❌
+
+Your `LICENSE` file is **empty**.
+
+You need the **full Apache License 2.0**, not just the word "Apache".
+
+On GitHub, easiest way:
+
+**Add file → Create new file → `LICENSE` → Choose a license template → Apache License 2.0 → Commit.**
+
+---
+
+### Q3 — Almost correct ⚠️
+
+The grader says the content is correct, but the repository name is wrong.
+
+After renaming, the URL becomes:
+
+```text
+https://github.com/Pavand28/github-final-project/blob/main/CODE_OF_CONDUCT.md
